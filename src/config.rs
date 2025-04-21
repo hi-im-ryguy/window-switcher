@@ -265,6 +265,7 @@ impl Hotkey {
             "insert" => 0x52,
             "delete" => 0x53,
             "menu" => 0x5d,
+            "esc" | "escape" => 0x01,
             _ => return None,
         };
         Some((modifier, code))
