@@ -1,7 +1,8 @@
 use anyhow::{Context, Result};
 use window_switcher::utils::*;
 
-use windows::Win32::Foundation::{BOOL, HWND, LPARAM};
+use windows::core::BOOL;
+use windows::Win32::Foundation::{HWND, LPARAM};
 use windows::Win32::Graphics::Dwm::{DWM_CLOAKED_APP, DWM_CLOAKED_INHERITED, DWM_CLOAKED_SHELL};
 use windows::Win32::UI::WindowsAndMessaging::{EnumWindows, GetWindow, GW_OWNER};
 
@@ -12,7 +13,7 @@ fn main() -> Result<()> {
     for hwnd in hwnds {
         let title = get_window_title(hwnd);
         let cloak_type = get_window_cloak_type(hwnd);
-        let (is_visible, is_iconic, is_tool) = get_window_state(hwnd);
+        let (is_visible, is_iconic, is_tool, _is_topmost) = get_window_state(hwnd);
         let (width, height) = get_window_size(hwnd);
         let owner_hwnd: HWND = unsafe { GetWindow(hwnd, GW_OWNER) }.unwrap_or_default();
         let owner_title = if !owner_hwnd.is_invalid() {
